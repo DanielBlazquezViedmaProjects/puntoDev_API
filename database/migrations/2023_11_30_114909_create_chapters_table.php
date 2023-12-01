@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
-            $table->int('book_id');
+            $table->unsignedBigInteger('book_id');
             $table->foreign('book_id')->references('id')->on('books');
-            $table->varchar('number_chapter');
-            $table->varchar('title');
-            $table->varchar('resume');
-
+            $table->string('number_chapter');
+            $table->string('title');
+            $table->string('resume')->nullable();
             $table->timestamps();
         });
     }
