@@ -11,7 +11,7 @@ class BookController extends Controller{
      * Display a listing of the resource.
      */
     public function index(){
-        $getAllBooks = Book::all();
+        $getAllBooks = Book::with('chapter')->get();
         return response()->json($getAllBooks);
     }
 
@@ -35,18 +35,8 @@ class BookController extends Controller{
      * Display the specified resource.
      */
     public function show(Book $book){
-        if(!$book){
-
-        }
+        $book->load('chapter');
         return response()->json($book);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Book $book)
-    {
-        //
     }
 
     /**
@@ -68,6 +58,9 @@ class BookController extends Controller{
      * Remove the specified resource from storage.
      */
     public function destroy(Book $book){
+
+        $book->chapter()->delete();
+
         $book->delete();
         $message = [
             'message'   =>  'Book deleted successfully',
